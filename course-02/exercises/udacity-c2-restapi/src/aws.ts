@@ -41,9 +41,9 @@ export function getGetSignedUrl( key: string ): string{
  * @Returns:
  *    a url as a string
  */
-export function getPutSignedUrl( key: string ){
+export function getPutSignedUrl( key: string ): string{
 
-    const signedUrlExpireSeconds = 60 * 5;
+    const signedUrlExpireSeconds = 60 * 20;
 
     const params = {
       Bucket: c.aws_media_bucket,
