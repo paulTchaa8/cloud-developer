@@ -1,5 +1,6 @@
 DROP VIEW IF EXISTS joined;
 DROP VIEW IF EXISTS toyotas;
+DROP VIEW IF EXISTS fords;
 DROP TABLE IF EXISTS "public"."make";
 DROP TABLE IF EXISTS "public"."cars";
 
@@ -36,3 +37,10 @@ SELECT cars.type, cars.cost, cars.model, make.name
   INNER JOIN make ON (cars.make_id = make.id)
   WHERE make.name = 'toyota'
   ORDER BY cost DESC  LIMIT 30;
+
+CREATE VIEW fords AS
+  SELECT cars.type, cars.cost, cars.model, make.name
+    FROM cars
+    INNER JOIN make ON (cars.make_id = make.id)
+    WHERE make.name = 'ford'
+    ORDER BY cost DESC LIMIT 30;
