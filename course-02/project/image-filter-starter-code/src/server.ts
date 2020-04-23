@@ -1,6 +1,6 @@
-import express from 'express';
+import express, {Request, Response } from 'express';
 import bodyParser from 'body-parser';
-import {filterImageFromURL, deleteLocalFiles} from './util/util';
+import {filterImageFromURL, deleteLocalFiles, arrayOfFiles} from './util/util';
 
 (async () => {
 
@@ -29,6 +29,28 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
   /**************************************************************************** */
 
+  app.get('/filteredimage', async (req: Request, res: Response) => {
+    let { image_url }: any = req.query;
+    const dirname = __dirname+'/util/tmp/';
+
+    // Validate the image url
+    if (!image_url) {
+      res.status(400).send('URL Image missing!');
+    }
+
+    // deletes the old files
+    const filesList: string[] = await arrayOfFiles(dirname);
+    console.log('List of files: ', filesList);
+
+    await deleteLocalFiles(filesList);
+
+    // Filter the image
+    const filteredpathFile = await filterImageFromURL(image_url);
+
+   // send the resulting file
+    res.status(200).sendFile(filteredpathFile);
+
+  });
   //! END @TODO1
   
   // Root Endpoint
